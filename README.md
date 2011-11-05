@@ -15,7 +15,7 @@ Contributors
 History
 =======
 
-BlogCube was developed as a commercial blogging at the time WordPress started becoming popular. As a team, we worked as volunteers for about two years developing the platform, but aabandoned the project which was failing mainly due to management issues.
+BlogCube was developed as a commercial blogging platform at the time WordPress, a free alternative, started becoming popular. As a team, we worked as volunteers for about two years developing the software, but abandoned the project which was failing mainly due to management issues, strong competition and a demoralized team.
 
 Open sourcing
 =============
