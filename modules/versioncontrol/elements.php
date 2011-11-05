@@ -1,0 +1,23 @@
+<?php
+    // $evc->RegisterVersionedElement('blogging/accounts/turingtest');
+    /*
+    $evc->RegisterVersionedElement('blogging/media/album_deletephoto');
+    $evc->RegisterVersionedElement('blogging/media/album_photoview');
+    $evc->RegisterVersionedElement('blogging/media/album_savecreation');
+    $evc->RegisterVersionedElement('blogging/media/albumlistsmall');
+    $evc->RegisterVersionedElement('blogging/media/albumphotos');
+    $evc->RegisterVersionedElement('blogging/media/albumpublicity');
+    $evc->RegisterVersionedElement('blogging/media/albums');
+    $evc->RegisterVersionedElement('blogging/media/albums_createalbums');
+    $evc->RegisterVersionedElement('blogging/media/albums_delete');
+    $evc->RegisterVersionedElement('blogging/media/albums_list');
+    $evc->RegisterVersionedElement('blogging/media/albumsave_publicity');
+    $evc->RegisterVersionedElement('blogging/media/albumsavename');
+    $evc->RegisterVersionedElement('blogging/media/allalbums');
+    $evc->RegisterVersionedElement('blogging/media/firstalbumupload');
+    $evc->RegisterVersionedElement('blogging/media/makedefault');
+    $evc->RegisterVersionedElement('blogging/media/wysiwyg/show_albumphotos');
+    $evc->RegisterVersionedElement('blogging/media/wysiwyg/showalbums');
+    $evc->RegisterVersionedElement('blogging/media/wysiwyg/wysiwyg');
+    */
+?>

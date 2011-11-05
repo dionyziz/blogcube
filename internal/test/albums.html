@@ -1,0 +1,213 @@
+<html>
+	<head>
+		<title>Albums Interface Proposal</title>
+		<style type="text/css">
+			body {
+				font-family: "Arial", "Helvetica", sans-serif;
+				margin: auto;
+				width: 650px;
+			}
+			div#logo {
+				padding-top: 30px;
+				text-align: right;
+			}
+			div#tabstop {	
+				background-image: url('http://blogcube.net/beta/images/dotted.gif');
+				background-repeat: repeat-x;
+				background-position: top;
+				padding-top: 20px;
+			}
+			div#tabstop div {
+				display: inline;
+				padding: 5px 5px 0px 5px;
+				background-color: #e6eaff;
+				border: 1px solid #8baed5;
+				cursor: pointer;
+				margin: 0 2px 0 0;
+				vertical-align: middle;
+				font-size: 90%;
+				color: #3b5ea5;
+			}
+			div#tabstop div.selected {
+				background-color: #cdd6ee;
+				padding: 7px 6px 3px 8px;
+				z-index: 2;
+				border-bottom: 1px solid #cdd6ee;
+				position: relative;
+				top: -2px;
+			}
+			div#tabstop div.disabled {
+				opacity: .4;
+			}
+			div#photos {
+				display: block;
+				background-color: #f7f7ff;
+				height: 530px;
+				border: 1px solid #8baed5;
+				border-top-width: 0;
+				padding: 2px 2px 2px 2px;
+				overflow: auto;
+			}
+			div#photos div {
+				padding: 5px 5px 5px 5px;
+				display: inline;
+				width: 100px;
+				height: 100px;
+				font-size: 90%;
+			}
+			div#photos div div {
+				display: table-cell;
+				text-align: center;
+				color: #3b5ea5;
+				cursor: pointer;
+			}
+			div#photos div div img {
+				vertical-align: middle;
+				border: 1px solid #8baed5;
+			}
+			div#albums {
+				display: block;
+				background-color: #f7f7ff;
+				height: 130px;
+				border: 1px solid #8baed5;
+				border-bottom-width: 0;
+				padding: 2px 2px 2px 2px;
+				overflow: auto;
+			}
+			div#albums div {
+				line-height: 25px;
+				text-align: center;
+				display: table-cell;
+				font-size: 90%;
+				padding: 5px 5px 5px 5px;
+				cursor: pointer;
+				overflow: hidden;
+				color: #3b5ea5;
+			}
+			div#albums div img {
+				border: 1px solid #8baed5;
+				width: 75px;
+				height: 75px;
+				text-align: center;
+			}
+			div#albums div.selected {
+				font-weight: bold;
+				border: 1px solid #8baed5;
+				background-color: #cdd6ee;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="logo">
+			<img src="http://blogcube.net/beta/images/bcuben.jpg" alt="BlogCube" />
+		</div>
+		<div id="tabstop">
+			<div title="Albums List"><img src="../../images/silk/images.png" alt="Albums List" /> All Albums</div><div title="Album View" class="selected"><img src="../../images/silk/folder_image.png" alt="Album" /> Mountains</div><div title="Photo View" class="disabled"><img src="../../images/silk/image.png" alt="Photo" /> Photo</div>
+		</div>
+		<div id="albums">
+			<div>
+				<img src="http://static.flickr.com/20/69107931_551f9e9f9a_s.jpg" style="width:75px;height:75px" /><br />
+				My Toys
+			</div>
+			<div>
+				<img src="http://static.flickr.com/31/50136317_87bbc228a3_s.jpg" /><br />
+				Cool Stuff!
+			</div>
+			<div class="selected">
+				<img src="http://static.flickr.com/30/55027803_feb16d8909_s.jpg" /><br />
+				Mountains
+			</div>
+			<div>
+				<img src="http://static.flickr.com/2/3121700_42f3e2e67c_s.jpg" /><br />
+				Games Pics
+			</div>
+			<div>
+				<img src="http://static.flickr.com/35/71386203_7c3a56a383_s.jpg" /><br />
+				Nighthawkz
+			</div>
+			<div>
+				<img src="http://static.flickr.com/69/158095090_6d3cfee531_s.jpg" /><br />
+				Railroad
+			</div>
+			<div>
+				<img src="http://static.flickr.com/75/158781929_b0c70e1080_s.jpg" /><br />
+				Towers
+			</div>
+			<div>
+				<img src="http://static.flickr.com/45/152479242_abc5ba457b_s.jpg" /><br />
+				Gurlz
+			</div>
+		</div>
+		<div id="photos">
+			<div><div>
+				<img src="http://static.flickr.com/71/159244936_aaf4f9c750_t.jpg" />
+				mountain.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/51/159235877_4d191286e8_t.jpg" />
+				vouno.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/63/159231155_916286e882_t.jpg" />
+				olympos.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/65/159235879_847b958fe3_t.jpg" />
+				imalaia.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/70/159230129_d198fb40e0_t.jpg" />
+				kris-kris.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/44/159229153_7a55a0b596_t.jpg" />
+				thetop.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/68/159238962_c54fc25ecf_t.jpg" />
+				foo.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/52/159235882_d0c70e8f61_t.jpg" />
+				little_boy.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/54/159235878_7aa9079104_t.jpg" />
+				village.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/71/159235876_63bcf0a4b2_t.jpg" />
+				window.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/77/159231157_2d97f005e6_t.jpg" />
+				stones.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/67/159229185_79a014f687_t.jpg" />
+				gf.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/50/159229244_357501828e_t.jpg" />
+				view.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/78/159229123_74a24264d4_t.jpg" />
+				ilaria.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/62/159229099_97f11ad9c8_t.jpg" />
+				air-photo.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/78/159229205_f6393ac36a_t.jpg" />
+				sunbehind.jpg
+			</div></div>
+			<div><div>
+				<img src="http://static.flickr.com/50/159231156_e15b39dcbe_t.jpg" />
+				pathway.jpg
+			</div></div>
+		</div>
+	</body>
+</html>
+ 

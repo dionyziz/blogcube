@@ -1,0 +1,25 @@
+<?php
+	include "header.php";
+	
+	$id = $_GET[ "id" ];
+	switch( $id ) {
+		case "messages":
+			include "images/dynamic/messages.php";
+			break;
+		case "pages":
+			include "images/dynamic/pages.php";
+			break;
+	}
+	
+	if ( !$res ) { /* See if it failed */
+		$res = imagecreatetruecolor(50, 50); /* Create a blank image */
+		$bgc = imagecolorallocate($res, 255, 255, 255);
+		$tc = imagecolorallocate($res, 0, 0, 0);
+		imagefilledrectangle($res, 0, 0, 50, 50, $bgc);
+		/* Output an errmsg */
+		imagestring($res, 3, 5, 5, "Error", $tc);
+	}
+
+	header( "Content-type: image/png" );
+	imagepng( $res );
+?>

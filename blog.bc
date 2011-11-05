@@ -1,0 +1,8 @@
+<?php
+	include "header.php";
+	
+	$emailblog_sender = $_POST[ "emailblog_sender" ];
+	$emailblog_data = $_POST[ "emailblog_data" ];
+	
+	echo EmailBlogRaw( $emailblog_data , $emailblog_sender );
+?>

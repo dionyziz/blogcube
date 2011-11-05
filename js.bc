@@ -1,0 +1,79 @@
+<?php
+	include "header.php";
+	
+	ob_start( "html_filter" );
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN
+	http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>BlogCube - Please Enable JavaScript</title>
+		<link href="style.css.bc" type="text/css" rel="stylesheet" />
+	</head>
+	<body>
+		<script type="text/javascript">
+			window.location.href = "index.bc";
+		</script>
+		<div id="bb">
+		<noscript>
+			<table width="100%" style="width:100%">
+				<tr><td></td>
+					<td class="centered"><h3>Please Enable JavaScript</h3></td><td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="centered">
+			In order to view this web page you need to enable JavaScript.<br /><br />
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="centered" width="600">
+			<?php 
+				switch( UserBrowser() ) {
+					case "FIREFOX":
+						$content = "In FireFox, from the <i>Tools</i> menu select the \"<i>Options</i>...\" item. "
+						. " From the left, pick the \"<i>Web Features</i>\" icon and check the box \"<i>Enable Javascript</i>\"."
+						. " Afterwards, click \"<i>OK</i>\" and press F5 to reload this page.<br /><br />"
+						. " Still confused? <a href=\"http://www.mozilla.org/support/firefox/options#webfeatures\">FireFox Help</a>";
+						gui_window( "Enabling JavaScript in FireFox" , $content , "" , false , false , 800 );
+						break;
+					case "MSIE":
+						$content = "In Internet Explorer, from the <i>Tools</i> menu select the \"<i>Internet Options</i>...\" item."
+						. " From the top, pick the \"<i>Security</i>\" tab. Afterwards, select the \"<i>Trusted sites</i>\" icon and"
+						. " click on the \"<i>Sites</i>...\" button. In the textbox under \"Add this Web site to the zone\" type"
+						. " \"$systemurl\". Make sure the box \"<i>Require server verification</i>\" is unchecked and click the \"<i>Add</i>\" button,"
+						. " then the \"<i>OK</i>\" button."
+						. " If the button \"<i>Default Level</i>\" is enabled in the Internet Options window, click on it, and then select \"<i>OK</i>\"."
+						. " Finally press F5 to reload this web site."
+						. "<br /><br />"
+						. "But why use Internet Explorer? <a href=\"http://www.mozilla.org/\">Try FireFox</a>";
+						gui_window( "Add " . $system . " to your Trusted Pages in Internet Explorer" , $content , "" , false , false , 800 );
+						break;
+					case "K-MELEON":
+						$content = "In K-Meleon, from the <i>Tools</i> menu highlight the \"<i>Privacy</i>\" item. "
+						. " In the new menu, make sure the item \"<i>Block Javascript</i>\" is unchecked."
+						. " Afterwards, press F5 to reload this page.<br /><br />"
+						. " Need more info? <a href=\"http://kmeleon.sourceforge.net/docs/faq.php#privacy1\">Privacy in K-Meleon</a><br />";
+						gui_window( "Enabling JavaScript in K-Meleon" , $content , "" , false , false , 800 );
+						break;
+					case "OPERA":
+						$content = "In Opera, hit <i>F12</i>. "
+						. " In the pop-up menu, make sure the item \"<i>Enable Javascript</i>\" is checked."
+						. " Afterwards, press F5 to reload this page.<br /><br />"
+						. " Need more info? <a href=\"http://www.opera.com/support/search/supsearch.dml?index=657\">Javascript in Opera</a><br />";
+						gui_window( "Enabling JavaScript in Opera" , $content , "" , false , false , 800 );
+						break;
+				} ?>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+		</noscript>
+		</div>
+	</body>
+</html>
+<?php
+	ob_end_flush();
+?>

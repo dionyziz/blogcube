@@ -1,0 +1,51 @@
+Expand = {
+    sections : [] ,
+    
+    count : 0 ,
+    
+    expanded : - 1 ,
+    
+    clear : function () {
+        this.sections = [];
+    } ,
+    
+    add : function ( section ) {
+        this.sections.push( section );
+        this.count += 1;
+        g( section + '_link' ).onclick = function () {
+            this.click( section );
+            return false;
+        };
+    } ,
+    
+    expand : function ( section ) {
+        var i;
+        
+        for ( i = 0; i < this.count; i++ ) {
+            if ( this.sections[ i ] == section )
+                expanded = i;
+            else
+                g( this.sections[ i ] ).style.display = 'none';
+        }
+        g( section ).style.display = '';
+    } , 
+    
+    collapse : function ( section ) {
+        expanded = - 1;
+        g( section ).style.display = 'none';
+    } ,
+    
+    click : function ( section ) {
+        var i;
+        
+        for ( i = 0; i < this.count; i++ ) {
+            if ( this.sections[ i ] == section ) {
+                if ( expanded == i )
+                    this.collapse( section );
+                else
+                    this.expand( section );
+                break;
+            }
+        }
+    }
+};

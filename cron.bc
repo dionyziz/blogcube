@@ -1,0 +1,17 @@
+<?php
+	$incron = true;
+	
+	include "header.php";
+	// should get automatically requested every 5 minutes
+	
+	// check for internal ip
+	include "localonly.php";
+	
+	// create an instance of the Cron class
+	$mycron = New Cron();
+	// fire it, should call everything we need
+	$mycron->Fire();
+
+	?>Cron executed successfully on <?php
+	echo NowDate();
+?>.

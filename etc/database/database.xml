@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="xml2sql.xsl"?>
+<!DOCTYPE blogcube SYSTEM "blogcubedb.dtd">
+<blogcube version="2.0" codename="Paris">
+	<database name="blogcube" type="MySQL">
+		<table name="users">
+			<field name="user_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="user_username" type="TEXT" />
+			<field name="user_password" type="TEXT" /> <!-- md5 -->
+			<field name="user_failedlogins" type="INT" />
+			<field name="user_pin" type="TEXT" /> <!-- md5 -->
+			<field name="user_lastactive" type="DATETIME" />
+			<field name="user_invitedbyuserid" type="INT" />
+			<field name="user_invitationsleft" type="INT" />
+			<field name="user_friendsrootfolderid" type="INT" ref="friendfolders.ffolder_id" />
+			<field name="user_bookmarksrootfolderid" type="INT" ref="bookmarkfolders.bfolder_id" />
+			<field name="user_email" type="TEXT" />
+			<field name="user_mobilephone" type="TEXT" />
+			<field name="user_defaultavatar" type="INT" ref="media.media_id" /> <!-- Notice: No reference to `avatars`, but `media` -->
+			<field name="user_bcadmin" type="INT" /> <!-- 100 = user ; 500 = admin ; 1000 = lead developer -->
+			<field name="user_registerdate" type="TIMESTAMP" />
+			<field name="user_allowemailblogging" type="ENUM" values="'yes','no'" />
+			<field name="user_allowsmsblogging" type="ENUM" values="'yes','no'" />
+			<!-- <field name="user_timezone" type="INT" /> -->
+
+			<!-- <Personal Details> -->
+			<field name="user_firstname" type="TEXT" />
+			<field name="user_lastname" type="TEXT" />
+			<field name="user_countryid" type="INT" ref="countries.country_id" />
+			<field name="user_gender" type="ENUM" values="'male','female'" />
+			<field name="user_dob" type="DATE" />
+			<field name="user_website" type="TEXT" />
+			<field name="user_msn" type="TEXT" />
+			<field name="user_yahoo" type="TEXT" />
+			<field name="user_icq" type="TEXT" />
+			<field name="user_jabber" type="TEXT" />
+			<field name="user_gtalk" type="TEXT" />
+			<field name="user_aim" type="TEXT" />
+			<!-- </Personal Details> -->
+			
+			<!-- <Publicize> -->
+			<field name="user_publicemail" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicmsn" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicyahoo" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicicq" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicjabber" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicgtalk" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicaim" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicbirthday" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicage" type="ENUM" values="'private','friends','ffriends','public'" />
+			<field name="user_publicmobile" type="ENUM" values="'private','friends','ffriends','public'" />
+			<!-- </Publicize> -->
+			<field name="user_favoritemovie" type="TEXT" />
+			<field name="user_favoriteband" type="TEXT" />
+			<field name="user_favoritemusicgenre" type="TEXT" />
+			<field name="user_favoritegame" type="TEXT" />
+			<field name="user_favoritequote" type="TEXT" />
+			<field name="user_hair" type="ENUM" values="'','blonde','brown','black','red','ginger','auburn','gray'" />
+			<field name="user_eyes" type="ENUM" values="'','blue','brown','green','hazel','gray'" />
+			<field name="user_aboutme" type="TEXT" />
+		</table>
+		<table name="useravatars">
+			<field name="avatar_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="avatar_userid" type="INT" ref="users.user_id" />
+			<field name="avatar_mediaid" type="INT" ref="media.media_id" />
+		</table>
+		<table name="blogs">
+			<field name="blog_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="blog_active" type="ENUM" values="'yes','no'" />
+			<field name="blog_name" type="TEXT" /> <!-- unique -->
+			<field name="blog_title" type="TEXT" />
+			<field name="blog_description" type="TEXT" />
+			<field name="blog_access" type="ENUM" values="'private','friends','public'" />
+			<field name="blog_createdate" type="DATETIME" />
+			<field name="blog_templateid" type="INT" ref="templates.template_id" />
+            <field name="blog_popularity" type="INT" /><!-- popularity of blog; we should find a method to evaluate it; always 0 for now -->
+		</table>
+		<table name="permissions">
+			<field name="permission_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="permission_userid" type="INT" ref="users.user_id" />
+			<field name="permission_blogid" type="INT" ref="blogs.blog_id" />
+			<field name="permission_permissions" type="INT" />
+		</table>
+		<table name="posts">
+			<field name="post_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="post_blogid" type="INT" ref="blogs.blog_id" />
+			<field name="post_userid" type="INT" ref="users.user_id" />
+			<field name="post_title" type="TEXT" />
+			<field name="post_text" type="TEXT" />
+			<field name="post_date" type="DATETIME" />
+			<field name="post_ip" type="TEXT" />
+			<field name="post_active" type="ENUM" values="'yes','no'" />
+		</table>
+		<table name="templates"> <!-- Needs to be reconsidered -->
+			<field name="template_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="template_title" type="TEXT" />
+			<field name="template_createdate" type="DATETIME" />
+			<field name="template_lastmodified" type="DATETIME" />
+			<field name="template_bodybd" type="TEXT" />
+			<field name="template_bodyalign" type="ENUM" values="'center','left','right'" />
+			<field name="template_bodyrightbg" type="TEXT" />
+			<field name="template_bodyleftbf" type="TEXT" />
+			<field name="template_titlebgimg" type="TEXT" />
+			<field name="template_titlebg" type="TEXT" />
+		</table>
+		<table name="countries">
+			<field name="country_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="country_name" type="TEXT" />
+			<field name="country_flagmediaid" type="INT" ref="media.media_id" /> <!-- image -->
+		</table>
+		<table name="invitations">
+			<field name="invitation_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="invitation_invitinguserid" type="INT" ref="users.user_id" />
+			<field name="invitation_invitedemail" type="TEXT" />
+			<field name="invitation_invitedname" type="TEXT" />
+			<field name="invitation_registereduserid" type="INT" ref="users.user_id" />
+			<field name="invitation_code" type="TEXT" /> <!-- random md5 -->
+		</table>
+		<!-- <Friends> -->
+		<table name="friendfolders">
+			<field name="ffolder_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="ffolder_parentfolderid" type="INT" ref="friendfolders.ffolder_id" /> <!-- if it's a root folder, this is 0 -->
+			<field name="ffolder_name" type="TEXT" />
+			<field name="ffolder_userid" type="INT" />
+			<field name="ffolder_expanded" type="ENUM" values="'no','yes'" />
+		</table>
+		<table name="friends">
+			<field name="friend_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="friend_userid" type="INT" ref="users.user_id" />
+			<field name="friend_parentfolderid" type="INT" ref="friendfolders.ffolder_id" /> <!-- can't be 0 -->
+			<field name="friend_dateadded" type="DATETIME"/>
+		</table>
+		<!-- </Friends> -->
+		
+		<!-- <Bugreporting> -->
+		<table name="bugs">
+			<field name="bug_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="bug_name" type="TEXT" />
+			<field name="bug_description" type="TEXT" />
+			<field name="bug_os" type="TEXT" />
+			<field name="bug_userip" type="TEXT" />
+			<field name="bug_userid" type="INT" ref="users.user_id" />
+			<field name="bug_userbrowser" type="TEXT" />
+			<field name="bug_userbrowserversion" type="TEXT" />
+			<field name="bug_fixedby" type="INT" ref="users.user_id" />
+			<field name="bug_useragent" type="TEXT" />
+			<field name="bug_osversion" type="TEXT" />
+			<field name="bug_date" type="DATETIME" />
+			<field name="bug_status" type="ENUM" values="'new','fixed','duplicate','invalid'"/>
+			<field name="bug_assigned" type="INT" />
+		</table>
+		<!--</Bugreporting>-->
+		
+		<!--<Action logging>-->
+		<table name="logs" type="MyISAM"> <!-- MyISAM necessary for INSERT DELAYED -->
+			<field name="log_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="log_userid" type="INT" ref="users.user_id" />
+			<field name="log_ip" type="TEXT" />
+			<field name="log_timestamp" type="TIMESTAMP" />
+			<field name="log_action" type="TEXT" />
+		</table>
+		
+		<table name="errorlogs">
+			<field name="err_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="err_userid" type="INT" ref="users.user_id" />
+			<field name="err_description" type="TEXT" />
+			<field name="err_ip" type="TEXT" />
+			<field name="err_timestamp" type="TIMESTAMP" />
+			<field name="err_page" type="TEXT" />
+		</table>
+		<!--</Action logging>-->
+		
+		<!--<Media>-->
+		<table name="media">
+			<field name="media_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="media_ip" type="TEXT" />
+			<field name="media_timestamp" type="TIMESTAMP" />
+			<field name="media_userid" type="INT" ref="users.user_id" />
+			<field name="media_filename" type="TEXT" />
+			<field name="media_mimetype" type="TEXT" />
+			<field name="media_compressed" type="ENUM" values="'no','yes'" />
+		</table>
+		<!--<Deleted media>-->
+		<table name="deleted_media">
+			<field name="del_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="del_mediaid" type="INT" ref="media.media_id" />
+			<field name="del_ip_upload" type="TEXT" />
+			<field name="del_timestamp_upload" type="TIMESTAMP" />
+			<field name="del_userid" type="INT" />
+			<field name="del_filename" type="TEXT" />
+			<field name="del_mimetype" type="TEXT" />
+			<field name="del_compressed" type="ENUM" values="'no','yes'" />
+			<field name="del_ip_del" type="TEXT" />
+			<field name="del_timestamp_del" type="TIMESTAMP" />
+		</table>
+		<!--</Deleted media>-->
+		<table name="photoalbums">
+			<field name="album_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="album_name" type="TEXT" />
+			<field name="album_userid" type="INT" ref="users.user_id" />
+			<field name="album_userip" type="TEXT" /> <!--storing IP , Izual -->
+			<field name="album_createdate" type="TIMESTAMP" />
+			<field name="album_modifydate" type="TIMESTAMP" />
+			<field name="album_mainpic" type="INT" /> <!-- showing a picture a user chooses for an album , Izual-->
+			<field name="album_publicity" type="ENUM" values="'private','friends','ffriends','public'" /><!-- ablility to choose publicity status , Izual-->
+		</table>
+		<table name="deletedphotoalbums">
+			<field name="delalbum_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="delalbum_albumid" type="INT" ref="photoalbums.album_id" />
+			<field name="delalbum_name" type="TEXT" />
+			<field name="delalbum_userid" type="INT" />
+			<field name="delalbum_userip" type="TEXT" />
+			<field name="delalbum_deluserip" type="TEXT" />
+			<field name="delalbum_createdate" type="TIMESTAMP" />
+			<field name="delalbum_lastmodifydate" type="TIMESTAMP" />
+			<field name="delalbum_deletedate" type="TIMESTAMP" />
+			<field name="delalbum_mainpic" type="INT" />
+			<field name="delalbum_publicity" type="ENUM" values="'private','friends','ffriends','public'" />
+		</table>
+		<table name="photoalbumsmedia">
+			<field name="pamedia_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="pamedia_mediaid" type="INT" ref="media.media_id" />
+			<field name="pamedia_albumid" type="INT" ref="photoalbums.album_id" />
+		</table>
+		<!-- <Earth> -->
+		<table name="earth">
+			<field name="earth_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="earth_userid" type="INT" ref="users.user_id" />
+			<field name="earth_uploadedbytes" type="INT" />
+			<field name="earth_lastactive" type="DATETIME" />
+		</table>
+		<!-- </Earth> -->
+		<!--</Media>-->
+		
+		<!--<Documentation>-->
+		<table name="docfolders">
+			<field name="dfolder_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="dfolder_parid" type="INT" ref="docfolder.dfolder_id" /> <!-- if it's a folder under root, this is 0 -->
+			<field name="dfolder_key" type="TEXT" />
+			<field name="dfolder_name" type="TEXT" />
+		</table>
+		<table name="docitems">
+			<field name="ditem_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="ditem_parid" type="INT" ref="docfolders.dfolder_id" />
+			<field name="ditem_key" type="TEXT" />
+			<field name="ditem_title" type="TEXT" />
+			<field name="ditem_content" type="TEXT" />
+		</table>
+		<!--</Documentation>-->
+		
+		<!--<Bans>-->
+		<table name="bans">
+			<field name="ban_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="ban_userid" type="INT" ref="users.user_id" />
+			<field name="ban_ip" type="TEXT" />
+			<field name="ban_adminid" type="INT" ref="users.user_id" />
+			<field name="ban_starttime" type="DATETIME" />
+			<field name="ban_endtime" type="DATETIME" />
+			<field name="ban_isactive" type="ENUM" values="'no','yes'" />
+			<field name="ban_reason" type="TEXT" />
+		</table>
+		<!--</Bans>-->
+		
+		<!--<Comments>-->
+		<table name="globalcomments">
+			<field name="gcomment_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="gcomment_ip" type="TEXT" />
+			<field name="gcomment_created" type="DATETIME" />
+			<field name="gcomment_userid" type="INT" />
+			<field name="gcomment_parid" type="INT" />
+			<field name="gcomment_comment" type="LONGTEXT" />
+			<field name="gcomment_active" type="ENUM" values="'yes','no'" />
+			<field name="gcomment_lastedited" type="DATETIME" />
+			<field name="gcomment_avatarid" type="INT" />
+		</table>
+		
+		<table name="postcomments">
+			<field name="pcomment_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="pcomment_commentid" type="INT" ref="globalcomments.gcomment_id" />
+			<field name="pcomment_postid" type="INT" ref="posts.post_id" />
+		</table>
+		<!--</Comments>-->
+		
+		<!--<Messaging>-->
+		<table name="messages">
+			<field name="message_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="message_senderid" type="INT" ref="users.user_id" />
+			<field name="message_subject" type="TEXT" />
+			<field name="message_text" type="TEXT" />
+			<field name="message_date" type="TIMESTAMP" />
+		</table>
+		<table name="mrecipients">
+			<field name="mrecipient_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mrecipient_msgid" type="INT" ref="messages.message_id" />
+			<field name="mrecipient_userid" type="INT" ref="users.user_id" />
+		</table>
+		<table name="messagefolders">
+			<field name="mfolder_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mfolder_name" type="TEXT" />
+			<field name="mfolder_userid" type="INT" ref="users.user_id" />
+			<field name="mfolder_parid" type="INT" ref="messagefolders.mfolder_id" />
+			<field name="mfolder_special" type="ENUM" values="'none','incoming','sent','trash','drafts','spam'" />
+			<field name="mfolder_expanded" type="ENUM" values="'no','yes'" />
+		</table>
+		<table name="mfolder_user"> <!-- message X belongs to folder Y (of user A) and folder Z (of user B) -->
+			<field name="mfuser_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mfuser_msgid" type="INT" ref="messages.message_id" />
+			<field name="mfuser_foldid" type="INT" ref="messagefolders.mfolder_id" />
+			<field name="mfuser_read" type="ENUM" values="'no','yes'" />
+		</table>
+		<table name="mfilters">
+			<field name="mfilter_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mfilter_name" type="TEXT" />
+			<field name="mfilter_userid" type="INT" ref="users.user_id" />
+			<field name="mfilter_targetid" type="INT" ref="messagefolders.mfolder_id" />
+		</table>
+		<table name="mfiltertypes">
+			<field name="mftype_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mftype_filterid" type="INT" ref="mfilters.mfilter_id" />
+			<field name="mftype_type" type="INT" /><!-- Shouldn't this be ENUM? -->
+			<field name="mftype_info" type="TEXT" />
+			<field name="mftype_not" type="ENUM" values="'no','yes'" />
+		</table>
+		<table name="mspams">
+			<field name="mspam_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="mspam_msgid" type="INT" ref="messages.message_id" />
+			<field name="mspam_date" type="TIMESTAMP" />
+		</table>
+		<!--</Messaging>-->
+
+		<!--<Chatting>-->
+		<table name="chatmsg">
+			<field name="chatmsg_id" type="INT" primarykey="yes" autoincrement="yes" />
+			<field name="chatmsg_chanid" type="INT" primarykey="yes" ref="chatchannels.chatchannel_id" />
+			<field name="chatmsg_time" type="DATETIME" primarykey="yes" />
+			<field name="chatmsg_userid" type="INT" ref="users.user_id" />
+			<field name="chatmsg_msg" type="TEXT" />
+		</table>
+		<table name="chatchannels">
+			<field name="chatchannel_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="chatchannel_blogid" type="INT" ref="blogs.blog_id" />
+			<field name="chatchannel_name" type="TEXT" />
+			<field name="chatchannel_topic" type="TEXT" />
+			<field name="chatchannel_welcome" type="TEXT" />
+			<field name="chatchannel_noguest" type="ENUM" values="'yes','no'" />
+		</table>
+		
+		<table name="chatusers">
+			<field name="chatuser_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="chatuser_userid" type="INT" ref="users.user_id" />
+			<field name="chatuser_channelid" type="INT" ref="chatchannels.chatchannel_id" />
+			<field name="chatuser_isowner" type="ENUM" values="'yes','no'" />
+		</table>
+		<!--</Chatting>-->
+		
+		<!--<Bookmarks>-->
+		<table name="bookmarks">
+			<field name="bookmark_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="bookmark_userid" type="INT" ref="users.user_id" />
+			<field name="bookmark_postid" type="INT" ref="posts.post_id" />
+			<field name="bookmark_date" type="DATETIME" />
+			<field name="bookmark_label" type="TEXT" />
+			<field name="bookmark_folderid" type="INT" ref="bookmarkfolders.bfolder_id" />
+			<field name="bookmark_ip" type="TEXT" />
+		</table>
+		<table name="bookmarkfolders">
+			<field name="bfolder_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="bfolder_name" type="TEXT" />
+			<field name="bfolder_userid" type="INT" ref="users.user_id" />
+			<field name="bfolder_parid" type="INT" ref="bookmarkfolders.bfolder_id" /> <!-- or 0 -->
+			<field name="bfolder_ip" type="TEXT" />
+			<field name="bfolder_date" type="DATETIME" />
+		</table>
+		<!--</Bookmarks>-->
+		
+		<!--<Polls-->
+		<table name="polls">
+			<field name="poll_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="poll_name" type="TEXT" />
+			<field name="poll_userid" type="INT" ref="users.user_id" />
+			<field name="poll_date" type="DATETIME" />
+			<field name="poll_ip" type="TEXT" />
+			<field name="poll_closingdate" type="DATETIME" />
+		</table>
+		<table name="polloptions">
+			<field name="poption_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="poption_pollid" type="INT" ref="polls.poll_id" />
+			<field name="poption_text" type="TEXT" />
+			<field name="poption_ip" type="INT" />
+			<field name="poption_date" type="DATETIME" />
+		</table>
+		<table name="pollvotes">
+			<field name="pv_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="pv_userid" type="INT" ref="users.user_id" />
+			<field name="pv_polloptionid" type="INT" ref="polloptions.poption_id" />
+			<field name="pv_date" type="DATETIME" />
+			<field name="pv_ip" type="TEXT" />
+		</table>
+		<!--</Polls>-->
+		
+		<!-- <Math> -->
+		<table name="formulas">
+			<field name="formula_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="formula_formula" type="TEXT" />
+		</table>
+		<!-- </Math> -->
+		
+		<table name="cronlogs">
+			<field name="cronlog_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="cronlog_date" type="DATETIME" />
+		</table>
+		<!--<Habitats>-->
+		<table name="habitats">
+			<field name="hab_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="hab_name" type="TEXT" />
+			<field name="hab_description" type="TEXT" />
+			<field name="hab_userid" type="INT" />
+			<field name="hab_date" type="DATETIME" />
+			<field name="hab_x" type="INT" />
+			<field name="hab_y" type="INT" />
+		</table>
+		<table name="habitatsblogs">
+			<field name="hb_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="hb_habid" type="INT" />
+			<field name="hb_blogid" type="INT" />
+		</table>
+		<!--</Habitats>-->
+		<!--<Templates>-->
+		<table name="templatenames">
+			<field name="tmpln_id" type="INT" autoincrement="yes" primarykeys="yes" />
+			<field name="tmpln_name" type="TEXT" />
+			<field name="tmpln_userid" type="INT" />
+			<field name="tmpln_crdate" type="TIMESTAMP" />
+			<field name="tmpln_mddate" type="TIMESTAMP" />
+			<field name="tmpln_ip" type="TEXT" />
+			<field name="tmpln_privid" type="ENUM" values="'0','1'" />
+		</table>
+		<table name="templatestyles">
+			<field name="tmpls_id" type="INT" autoincrement="yes" primarykey="yes" />
+			<field name="tmpls_tmplid" type="INT" />
+			<field name="tmpls_sidebarcontainerleft_width" type="TEXT" />
+			<field name="tmpls_sidebarcontainerleft_background-color" type="TEXT" />
+			<field name="tmpls_sidebarcontainerright_width" type="TEXT" />
+			<field name="tmpls_sidebarcontainerright_background-color" type="TEXT" />
+			<field name="tmpls_aielposts_width" type="TEXT" />
+			<field name="tmpls_aielposts_background-color" type="TEXT" />
+			<field name="tmpls_aielposts_color" type="TEXT" />
+			<field name="tmpls_aielposts_font-size" type="TEXT" />
+			<field name="tmpls_aielposts_font-family" type="TEXT" />
+			<field name="tmpls_blogtitle_color" type="TEXT" />
+			<field name="tmpls_blogtitle_font-size" type="TEXT" />
+			<field name="tmpls_blogtitle_font-family" type="TEXT" />
+			<field name="tmpls_blogdate_color" type="TEXT" />
+			<field name="tmpls_blogdate_font-size" type="TEXT" />
+			<field name="tmpls_blogdate_font-family" type="TEXT" />
+			<field name="tmpls_blogposttitle_color" type="TEXT" />
+			<field name="tmpls_blogposttitle_font-size" type="TEXT" />
+			<field name="tmpls_blogposttitle_font-family" type="TEXT" />
+			<field name="tmpls_bloglinks_color" type="TEXT" />
+			<field name="tmpls_bloglinks_font-size" type="TEXT" />
+			<field name="tmpls_bloglinks_font-family" type="TEXT" />
+			<field name="tmpls_postedby_color" type="TEXT" />
+			<field name="tmpls_postedby_size" type="TEXT" />
+			<field name="tmpls_postedby_font-family" type="TEXT" />
+			<field name="tmpls_arrow_color" type="TEXT" />
+			<field name="tmpls_arrow_font-size" type="TEXT" />
+		</table>
+	</database>
+</blogcube>

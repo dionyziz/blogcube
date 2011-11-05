@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<BlogCube>
+	<file name="/srv/svnrepos/hooks/post-commit">
+		#!/bin/sh
+	
+		REPOS="$1"
+		REV="$2"
+		
+		wget http://www.blogcube.net/beta/internal/postcommit.php?rev=$REV
+	</file>
+</BlogCube>

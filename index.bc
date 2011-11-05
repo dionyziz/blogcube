@@ -1,0 +1,152 @@
+<?php
+	/*
+		Developer: dionyziz
+
+		
+		This file is the one and only file the user loads directly (in addition to *.bc in fact).
+		For entering blogcube, the user only has to visit /
+		For entering a specific blog, the user has to visit /?blogname
+		Both load this file, which contains only a warning if javascript is disabled,
+		and the main BlogCube div (bb) which is replaced with the actual content
+		using javascript and dynamic content loading over XMLHTTP.
+	*/
+	
+	include "header.php";
+
+	if ( isset( $_GET['permalink'] ) ) {
+		include "redir/permalink.php";
+		exit();
+	}
+	
+	/*
+		XMLHTTP support at: (more at http://en.wikipedia.org/wiki/XMLHttpRequest)
+		- Internet Explorer 4.0+
+		- Mozilla 1.0+ and mozilla-based browsers
+		- Opera 8.0+ (no POST support)
+		- Safari 1.2+
+		
+		BlogCube uses advanced javascript techniques (mainly XMLHTTP). 
+		Depending on the software and configuration the user is using, there are four
+		cases:
+		
+		1) Everything works smoothly. 
+			(Internet Explorer, FireFox, K-Meleon, other Mozilla-based browsers)
+		2) User has disabled javascript. 
+			Show warning using <noscript> here, and add a link to js.php with information on how to enable javascript.
+		3) Javascript is enabled, but the browser does not support XMLHTTP. 
+			Show a special warning using JavaScript by appending the warning's HTML code in the body element. 
+			(Internet Explorer prior to 4.0, Mozilla-based browsers before Mozilla 1.0, Opera prior to version 8.0, Safari older than 1.2)
+		4) Javascript is enabled, and the browser supports XMLHTTP, but not for POST method. 
+			The browser will be stuck at the loading page. (just show "your browser is not supported" screen)
+			
+		* Internet Explorer prior to 5.0 does not support dynamic PNG transparency loading (alphaimageloader), so it is not supported.
+	*/
+
+	$httph = $_SERVER[ "HTTP_HOST" ];
+	$httph = strtolower( $httph );
+	
+	$regularexp = "#^(([a-z0-9]+[\.])+)(blogcube)#";
+	preg_match( $regularexp , $httph , $matches );
+	
+	if( count( $matches ) ) {
+		$subdomains = explode( "." , $matches[ 0 ] );
+		
+		if( count( $subdomains ) > 1 ) {
+			$msub = $subdomains[ 0 ];
+			include "redir/subdomains.php";
+		}
+	}
+	
+	include "redir/postactions.php";
+	
+	// TODO: application/xhtml+xml
+	header( "Content-type: text/html; charset=utf-8" );
+	
+	// this will filter out unnecessary whitespace and HTML comments ;-)
+	bc_ob_start( "html_filter_strict" );
+	
+	echo $doctype;
+?>
+<?php /*<!-- BlogCube main index file, the only one loaded directly by the user (all others are loaded using XMLHTTP) -->*/?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title><?php
+			echo $system; 
+		?></title>
+		<!-- 
+		Let us have full Unicode character set support
+		-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!-- 
+		Here we create a link to the stylesheet document, which is a dynamic php document;
+		This CSS only includes the CSS code for Blogging (i.e. the blogging system);
+		blog-specific CSS code is appended later using CSSLoad() /js/dyncss
+		-->
+		<link href="style.css.bc" type="text/css" rel="stylesheet" />
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="icon" href="favicon.ico" />
+	</head>
+	<body>
+		<?php
+        /*
+			// browser check
+			include "browsercheck.php";
+            */
+		?>
+		<!-- The id here is important; this div's content is later going to be replaced by the javascript code -->
+		<div id="bb" class="bcb">
+			<!-- If there is no javascript support, we will have to display a warning -->
+			<?php
+				include "jscheck.php";
+			?>
+			<script type="text/javascript">
+				var bb_loadingelement = document.createElement('div');
+				bb_loadingelement.style.textAlign = 'center';
+				var bb_brelement = document.createElement('br');
+				var bb_imgelement = document.createElement('img');
+				bb_imgelement.src = 'images/loading.gif';
+				bb_imgelement.alt = 'Loading...';
+				bb_loadingelement.appendChild(bb_brelement);
+				bb_loadingelement.appendChild(bb_imgelement);
+				document.getElementById('bb').appendChild(bb_loadingelement);
+			</script><?php
+             ?>
+		</div><?php
+
+		if ( $debug_version && in_array($user->Username(), $bfc_debuggers) ) {
+			?><div id="debugdp" class="inline" style="position:absolute;top:30px;right:10px;z-index:50;background-color:aliceblue;border:1px solid darkgray;width:400px;padding:2px 2px 2px 2px;cursor:move;display:none" onselectstart="return false;" onmousedown="grab('debugdp',event);">
+				<div class="inline" style="float:right">
+					<a href="" title="Clear Debug Window" onclick="Debug.Clear();return false;" style="text-decoration:none">&amp;</a>
+					&nbsp;
+					<a href="" title="Close Debug Window" onclick="Debug.Deactivate();return false;" style="text-decoration:none">&times;</a>
+				</div>
+				<b style="padding-bottom:5px">BlogCube Debug</b><br />
+				<div id="debugd" class="inline" style="font-family:Courier New;color:midnightblue">
+				</div>
+			</div>
+			<div id="debugsql" style="display:none;background-color:#EEFFEE;position:fixed;left:10px;bottom:10px;font-size:110%;right:10px;border:1px solid darkgray">
+				<div id="debugsqlreal">
+				</div>
+				<a href="" style="position:fixed;bottom:14px;right:14px" onclick="g('debugsql').style.display='none';return false;">Hide</a>
+			</div><?php
+		}
+		include "browsercheck_end.php";
+
+		?>
+		<!-- 	This is the main script file, which is a php file that includes all necessary js files, for example general, windows, forms, and so on 
+			If the user is simply entering blogcube, no parameters are passed to the php file.
+			On the other hand, if the user is visiting a blog, the blogid is passed to the php file.
+			It will load the respective content (either blogcube or the blog specified) into the bb div. -->
+		<script src="bc.js.bc<?php
+			if( isset( $blogid ) ) {
+				if ( $blogid ) {
+					?>?blogid=<?php
+					echo $blog->Id();
+				}
+			}
+		?>" type="text/javascript"></script>
+	</body>
+</html>
+<?php
+	bc_ob_end_flush();
+?>

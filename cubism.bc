@@ -1,0 +1,30 @@
+<?php
+	$g = $_GET[ "g" ];
+	$e = $_GET[ "e" ];
+	
+	$g = str_replace( ".." , "" , $g );
+
+	include "header.php";
+	
+	switch ( $g ) {
+		case 'turingimage':
+			$ishtml = false;
+			break;
+		default:
+			$ishtml = true;
+	}
+	
+	if ($ishtml) {
+		header( "Content-type: text/html; charset=utf-8" );
+		bc_ob_start( "html_filter" );
+	}
+	else {
+		bc_ob_start();
+	}
+	
+	include "cubism/$g.php";
+
+	bc_ob_end_flush();
+
+	include "footer.php";
+?>

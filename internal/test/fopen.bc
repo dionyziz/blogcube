@@ -1,0 +1,4 @@
+<?php
+	$fh = fopen('/tmp/bc_earthdata.20', 'r');
+	fclose($fh);
+?>Done.

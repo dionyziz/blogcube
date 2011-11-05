@@ -1,0 +1,47 @@
+<?php
+	include "header.php";
+	
+	header( "Content-type: text/css" );
+
+	ob_start( "css_filter" );
+	
+	include "css/common.css.php";
+	
+	if( isset( $_GET[ "blogid" ] ) ) {
+		$blogid = $_GET[ "blogid" ];
+	}
+	else {
+		$blogid = 0;
+	}
+	
+	// for now, just use static CSS
+	if( $blogid ) {
+		include "css/blog.css.php";
+		/* GetBlog(0);
+		$templateid = $blog->TemplateId();
+		if ( !$templateid ) {
+			$templateid = 1;
+		}
+		
+		$sql = "SELECT
+					`$templates`.*
+				FROM
+					`$templates`
+				WHERE
+					`$templates`.`template_id`='" . $templateid . "'
+				LIMIT
+					1;";
+		$sqlr = mysql_query( $sql ) or mydie( mysql_error() );
+		if ( mysql_num_rows( $sqlr ) ) {
+			$sqltemplate = mysql_fetch_array( $sqlr );
+			$template = New Template( $sqltemplate );
+		}
+		else {
+			echo "Invalid Template ID";
+		} */
+	}
+	else {
+		include "css/blogging.css.php";
+	}
+	ob_end_flush();
+?>

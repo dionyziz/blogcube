@@ -1,0 +1,45 @@
+<?php
+	include "header.php";
+	
+	// this file should be requested only by earth.pl, which is running locally
+	// so we're not allowing any external requests
+	// check it
+	/* if( UserIp() != "127.0.0.1" ) {
+		bc_die( "upload.bc may only be accessed internally" );
+	} */
+	
+	// an earthid should be passed to us by the perl script, so that we know which pending upload to mark as completed
+	if( !isset( $_GET[ "earthid" ] ) ) {
+		bc_die( "No earthid passed to upload.bc" );
+	}
+	$earthid = $_GET[ "earthid" ];
+	if( $earthid == 0 ) {
+		bc_die( "Zero earthid passed to upload.bc" );
+	}
+	
+	$myearth = New Earth( $earthid );
+	
+	// $_FILES should be set, as the perl will just pass whatever would be normally passed to this file as if it was called directly using action...
+	// with the additional earth parameter in GET
+	if ( !$_FILES['uploadfile']['name'] ) {
+		bc_die( "You didn't select a file!" );
+	}
+	
+	$originalfilename = strtolower( basename( $_FILES['uploadfile']['name'] ) );
+	
+	$tempfile = $_FILES['uploadfile']['tmp_name'];
+	
+	// clear our earth, convert it to media
+	$mediaid = $myearth->EarthToMedia( $originalfilename , $tempfile );
+
+	// fire the callback script so that the earth-including code can take control
+	// notice: in fact that data gets transferred to the perl script, earth.pl, which then sends it just AS-IS to the client
+	// the client never in fact knows that upload.bc gets requested
+?><html><head><script type="text/javascript">
+parent.earthpostuploadcallback(<?php
+echo $myearth->Id();
+?>,<?php
+echo $mediaid;
+?>,'<?php
+echo escapesinglequotes( $earthpostupload );
+?>');</script><title></title></head><body></body></html>

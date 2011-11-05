@@ -1,0 +1,26 @@
+<?php
+	include "header.php";
+	
+	
+	$id = $_GET[ "id" ];
+	$t = $_GET[ 't' ];
+	switch ($t) {
+	case 'math':
+		header('Content-type: image/png');
+		$filename = $generated_math_path . $id . '.png';
+		echo file_get_contents( $filename, filesize( $filename ) );
+	break;
+
+	default:
+		if( isset( $_GET[ "iw" ] ) && isset( $_GET[ "ih" ] ) ) {
+			$thismedia = New Photo( $id );
+			header( "Content-type: " . $thismedia->mimetype() );
+			echo $thismedia->create_photo( $_GET[ "iw" ] , $_GET[ "ih" ] );
+		}
+		else {
+			$thismedia = New Media( $id );
+			header( "Content-type: " . $thismedia->mimetype() );
+			echo $thismedia->binary();
+		}
+	}
+?>

@@ -1,0 +1,19 @@
+<!ELEMENT blogcube (database*)>
+<!ATTLIST blogcube version CDATA #REQUIRED>
+<!ATTLIST blogcube codename CDATA #IMPLIED>
+
+<!ELEMENT database (table*)>
+<!ATTLIST database name CDATA #REQUIRED>
+<!ATTLIST database type CDATA #FIXED "MySQL">
+
+<!ELEMENT table (field*)>
+<!ATTLIST table name CDATA #REQUIRED>
+<!ATTLIST table type (MyISAM|InnoDB) "MyISAM">
+
+<!ELEMENT field EMPTY>
+<!ATTLIST field name CDATA #REQUIRED>
+<!ATTLIST field type (INT|TEXT|LONGTEXT|ENUM|DATE|DATETIME|TIMESTAMP) "INT">
+<!ATTLIST field values CDATA #IMPLIED>
+<!ATTLIST field autoincrement (yes|no) "no">
+<!ATTLIST field primarykey (yes|no) "no">
+<!ATTLIST field ref CDATA #IMPLIED>

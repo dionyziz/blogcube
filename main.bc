@@ -1,0 +1,82 @@
+<?php
+	
+	// this page is requested by the XMLHTTP mechanism
+	// via javascript. 
+	// a special parameter is passed to it using the POST method
+	// using=bubblexmlclient
+	// this parameter is hard to be faked by an inexperienced user
+	// and therefore it's difficult for someone to get the real HTML contents
+	// of the pages. However, it's easy for an experienced javascript coder
+	// to send this information and request any element he/she wants.
+	// The javascript script will request a so-called `element', which is a part of our
+	// web page - HTML. We will then send that element, and the client-side script
+	// will handle it accordingly.
+	include "header.php";
+	
+	// delay of 2 seconds if we're testing XMLHTTP downloading mechanism (normally not)
+	if ( $slowloading ) {
+		$nowtime = time() + 2;
+		while ( $nowtime > time() );
+	}
+	
+	// check if using parameter is okay
+	$using = $_POST[ "using" ];
+
+	// developer exemption: Allow GET instead of explicit POST
+	if ( $user->Username() == 'dionyziz' ) {
+		if ( !$using ) {
+			$using = "bubblexmlclient";
+			foreach ( $_GET as $getkey => $getvalue ) {
+				$_POST[ $getkey ] = $getvalue;
+			}
+		}
+	}
+
+	if ( $using != "bubblexmlclient" ) {
+		// send a warning that an invalid element was requested and stop execution
+		include "elements/invalid.php";
+		exit();
+	}
+	else {
+		// this was - supposedly - called by OUR script, so send the code that was requested
+		// all information of WHAT we should send is passed using POST
+		// target --> that's the id of the object where the HTML code that we
+		// are going to send is going to be put on. Simply put, g(target).innerHTML = whatever-we-send
+		$target = $_POST[ "target" ];
+		// index; rarely passed, used to identify the object-to-be-sent
+		// get it from the post array so that the element doesn't have to
+		$index = $_POST[ "index" ];
+		// id; that's the most important part, since it indicates which element we should be sending
+		$id = $_POST[ "id" ];
+		// the script can only request elements; that is php files inside the "elements" folder
+		// TODO: unicode security bug here?
+		$id = str_replace( ".." , "" , $id );
+		// if the element doesn't exist...
+		if ( !file_exists( "elements/$id.php" ) ) {
+			// send a warning message
+			include "elements/invalid.php";
+		}
+		else {
+			// else, send whatever the element contains
+			if ( get_magic_quotes_gpc() ) {
+				// but first, if get_magic_quotes_gpc() is enabled, we have to stripslashes from all POST variables passed to the element
+				$postkeys = array_keys( $_POST );
+				for( $i = 0 ; $i < count( $postkeys ) ; $i++ ) {
+					$_POST[ $postkeys[ $i ] ] = stripslashes( $_POST[ $postkeys[ $i ] ] );
+				}
+			}
+			$bfc = New BFC($id);
+			include "js/bfc/depend.php";
+			if ( !empty( $_POST[ 'lib' ] ) ) {
+				$bfc->LoadLibraries( $_POST[ 'lib' ] );
+			}
+			Element( $id );
+			$bfc->exec();
+		}
+	}
+	
+	bc_ob_end_flush();
+	
+	// finish
+	include "footer.php";
+?>

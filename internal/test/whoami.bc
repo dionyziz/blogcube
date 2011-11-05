@@ -1,0 +1,3 @@
+<?php
+	exec( "whoami >/var/www/vhosts/blogcube.net/httpdocs/beta/internal/test/whoami.file" );
+?>
