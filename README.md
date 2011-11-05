@@ -31,7 +31,7 @@ After this time, as the project leader, I am publishing it under the MIT license
 
 Using and studying BlogCube
 ===========================
-BlogCube is a working system. You are free and welcome to upload it on your own servers and use it as your blogging system. Even though it is working, it is not as good, complete, or extensible as other blogging platform such as WordPress. BlogCube is no longer developed nor supported. We encourage you to consider alternatives if you want a system that is secure, robust, and more importantly supported.
+BlogCube is a working system. You are free and welcome to upload it on your own servers and use it as your blogging system. Even though it is working, it is not as good, complete, or extensible as other blogging platforms such as WordPress. BlogCube is no longer developed nor supported. We encourage you to consider alternatives if you want a system that is secure, robust, and more importantly supported.
 
 The code you will find in this repository illustrates some good and some bad coding practices. It also contains many great and many terrible ideas on structuring code and code architecture that you can learn from (you can learn from both the good and the bad). Overall, I consider it a good piece of software to read critically, keeping in mind that it's far from perfect. We hope you learn something from it, and we would be happy to see code portions being used in your own software.
 
