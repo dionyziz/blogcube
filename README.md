@@ -11,11 +11,17 @@ Contributors
  * Dennis "d3nnn1z" Pantazopoulos <d3nnn1z@gmail.com>
  * Makis Kanavidis <makis.k@gmail.com>
  * Frederik Belien <sfbtkm2@msn.com>
+ * Jan van den Boom <janvdb@gmail.com>
+
+Features
+========
+
+The main unique features of BlogCube were the simplicity of its interface, the AJAX-based interface which was an innovation at its time, and several pioneer features such as LaTeX embedding support and comment color-coding.
 
 History
 =======
 
-BlogCube was developed as a commercial blogging platform at the time WordPress, a free alternative, started becoming popular. As a team, we worked as volunteers for about two years developing the software, but abandoned the project which was failing mainly due to management issues, strong competition and a demoralized team.
+BlogCube was developed as a commercial blogging platform at the time WordPress, a free alternative, started becoming popular. As a team, we worked as volunteers for about two years developing the software, but abandoned the project which was failing mainly due to management issues, strong competition and a demoralized team. We only released a closed beta to a restricted group of testers.
 
 Open sourcing
 =============
@@ -33,16 +39,10 @@ Using and studying BlogCube
 ===========================
 BlogCube is a working system. You are free and welcome to upload it on your own servers and use it as your blogging system. Even though it is working, it is not as good, complete, or extensible as other blogging platforms such as WordPress. BlogCube is no longer developed nor supported. We encourage you to consider alternatives if you want a system that is secure, robust, and more importantly supported.
 
-The code you will find in this repository illustrates some good and some bad coding practices. It also contains many great and many terrible ideas on structuring code and code architecture that you can learn from (you can learn from both the good and the bad). Overall, I consider it a good piece of software to read critically, keeping in mind that it's far from perfect. We hope you learn something from it, and we would be happy to see code portions being used in your own software.
+The code you will find in this repository illustrates some good and some bad coding practices. It also contains many great and many terrible ideas on structuring code and code architecture that you can learn from; you can learn from both the good and the bad. Overall, it is an educational piece of software to read critically, keeping in mind that it's far from perfect. We hope you learn something from it, and we would be happy to see code portions being used in your own software.
+
+This software is not a prime example of software architecture. It was written by students with limited experience in writing production code. As such, we urge you not to use this software in production or deploy it in large scale.
 
 License
 =======
-BlogCube - A blogging system
-
-Copyright (c) 2005 - 2006, Dionysis Zindros and the BlogCube Development Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+See the file LICENSE.
